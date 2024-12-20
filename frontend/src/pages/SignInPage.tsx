@@ -9,7 +9,7 @@ export type SignInFormData = {
   password: string;
 };
 
-export const SignInPage = () => {
+const SignInPage = () => {
   const { showToast } = useAppContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -80,3 +80,5 @@ export const SignInPage = () => {
     </form>
   );
 };
+
+export default SignInPage;

@@ -5,9 +5,12 @@ import cookieParser from "cookie-parser";
 
 import { connectDB } from "./config/db";
 
+import path from "path";
+import { configCloudinary } from "./config/cloudinary";
+
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
-import path from "path";
+import myHotelRoutes from "./routes/my-hotels.routes";
 
 const app = express();
 
@@ -25,8 +28,10 @@ app.use(
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/my-hotels", myHotelRoutes);
 
 app.listen(7000, () => {
   console.log("Server running on localhost:7000");
   connectDB();
+  configCloudinary();
 });

@@ -1,9 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+
+import { useAppContext } from "./contexts/AppContext";
+
 import Layout from "./layouts/Layout";
 import RegisterPage from "./pages/RegisterPage";
-import { SignInPage } from "./pages/SignInPage";
+import SignInPage from "./pages/SignInPage";
+import AddHotelPage from "./pages/AddHotelPage";
 
 function App() {
+  const { isLoggedIn } = useAppContext();
+
   return (
     <Routes>
       <Route
@@ -38,6 +44,16 @@ function App() {
           </Layout>
         }
       />
+      {isLoggedIn && (
+        <Route
+          path="/add-hotel"
+          element={
+            <Layout>
+              <AddHotelPage />
+            </Layout>
+          }
+        />
+      )}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
