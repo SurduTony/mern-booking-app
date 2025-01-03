@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("should allow user to add a hotel", async ({ page }) => {
-  await page.goto(`${UI_URL}/add-hotel`);
+  await page.goto(`${UI_URL}add-hotel`);
 
   await page.locator('[name="name"]').fill("Test Hotel");
   await page.locator('[name="city"]').fill("Test City");
