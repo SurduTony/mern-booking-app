@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { addHotel } from "../controllers/my-hotels.controller";
+import { addHotel, getHotels } from "../controllers/my-hotels.controller";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
 
@@ -27,10 +27,15 @@ router.post(
       .notEmpty()
       .isNumeric()
       .withMessage("Price per night is required and must be a number"),
-    body("facilities").notEmpty().isArray().withMessage("Facilities are required"),
+    body("facilities")
+      .notEmpty()
+      .isArray()
+      .withMessage("Facilities are required"),
   ],
   upload.array("imageFiles", 6),
   addHotel
 );
+
+router.get("/", verifyToken, getHotels);
 
 export default router;
