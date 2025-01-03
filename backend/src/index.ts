@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -14,8 +14,6 @@ import myHotelRoutes from "./routes/my-hotels.routes";
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "../../frontend/dist")));
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,9 +24,15 @@ app.use(
   })
 );
 
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/my-hotels", myHotelRoutes);
+
+app.use("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+});
 
 app.listen(7000, () => {
   console.log("Server running on localhost:7000");

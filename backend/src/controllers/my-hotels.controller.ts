@@ -10,8 +10,9 @@ export const addHotel = async (req: Request, res: Response) => {
     // 1. upload images to cloudinary
     const uploadPromises = imageFiles.map(async (image) => {
       const b64 = Buffer.from(image.buffer).toString("base64");
-      let dataURI = "data:" + image.mimetype + ";base64;" + b64;
+      let dataURI = "data:" + image.mimetype + ";base64," + b64;
       const res = await cloudinary.v2.uploader.upload(dataURI);
+
       return res.url;
     });
 
@@ -25,7 +26,7 @@ export const addHotel = async (req: Request, res: Response) => {
 
     res.status(201).send(hotel);
   } catch (error) {
-    console.log("Error creating hotel: " + error);
-    res.status(500).json({ message: "Something went wrong" });
+    console.error("Error creating hotel: " + error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
