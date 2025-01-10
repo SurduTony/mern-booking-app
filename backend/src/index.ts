@@ -11,6 +11,7 @@ import { configCloudinary } from "./config/cloudinary";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import myHotelRoutes from "./routes/my-hotels.routes";
+import hotelRoutes from "./routes/hotels.routes";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/my-hotels", myHotelRoutes);
+app.use("/api/hotels", hotelRoutes);
 
 app.use("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
