@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export type SignInFormData = {
   email: string;
@@ -14,6 +14,8 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const location = useLocation();
+
   const {
     register,
     formState: { errors },
@@ -24,7 +26,7 @@ const SignInPage = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
       showToast({ message: "Successful login", type: "SUCCESS" });
-      navigate("/");
+      navigate(location.state?.from?.pathname || "/");
     },
     onError: (error: Error) => {
       showToast({ message: error.message, type: "ERROR" });
@@ -46,7 +48,9 @@ const SignInPage = () => {
           className="border rounded w-full py-1 px-2 font-normal"
           {...register("email", { required: "This field is required" })}
         />
-        {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+        {errors.email && (
+          <span className="text-red-500">{errors.email.message}</span>
+        )}
       </label>
       <label className="text-gray-700 text-sm font-bold flex-1">
         Password
@@ -61,7 +65,9 @@ const SignInPage = () => {
             },
           })}
         />
-        {errors.password && <span className="text-red-500">{errors.password.message}</span>}
+        {errors.password && (
+          <span className="text-red-500">{errors.password.message}</span>
+        )}
       </label>
       <span className="flex items-center justify-between">
         <span className="text-xl">

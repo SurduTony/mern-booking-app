@@ -1,6 +1,25 @@
 import { Request, Response } from "express";
 import Hotel from "../models/hotel.model";
 import { HotelSearchResponse } from "../shared/Types";
+import { validationResult } from "express-validator";
+
+export const getHotel = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+    return;
+  }
+
+  const id = req.params.id.toString();
+
+  try {
+    const hotel = await Hotel.findById(id);
+    res.status(200).json(hotel);
+  } catch (error) {
+    console.error("Error in getHotel (hotels.controller): ", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export const searchHotels = async (req: Request, res: Response) => {
   try {
