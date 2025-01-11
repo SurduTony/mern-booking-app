@@ -1,8 +1,11 @@
 import express from "express";
-import { Register } from "../controllers/user.controller";
+import { Register, getMe } from "../controllers/user.controller";
 import { check } from "express-validator";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
+
+router.get("/me", verifyToken, getMe);
 
 router.post(
   "/register",
@@ -10,7 +13,9 @@ router.post(
     check("firstName", "First name is required").isString(),
     check("lastName", "Last name is required").isString(),
     check("email", "Email is required").isEmail(),
-    check("password", "Password with 6 or more characters required").isLength({ min: 6 }),
+    check("password", "Password with 6 or more characters required").isLength({
+      min: 6,
+    }),
   ],
   Register
 );
