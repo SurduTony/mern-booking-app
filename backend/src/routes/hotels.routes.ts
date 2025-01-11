@@ -1,4 +1,5 @@
 import {
+  getHotels,
   getHotel,
   searchHotels,
   createPaymentIntent,
@@ -11,6 +12,8 @@ import verifyToken from "../middleware/auth";
 const router = express.Router();
 
 router.get("/search", searchHotels);
+
+router.get("/", getHotels);
 
 router.get(
   "/:id",

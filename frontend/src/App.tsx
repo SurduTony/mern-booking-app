@@ -12,6 +12,7 @@ import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
 import BookingPage from "./pages/BookingPage";
 import MyBookingsPage from "./pages/MyBookingsPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const { isLoggedIn } = useAppContext();
@@ -22,7 +23,7 @@ function App() {
         path="/"
         element={
           <Layout>
-            <p>Home page</p>
+            <HomePage />
           </Layout>
         }
       />

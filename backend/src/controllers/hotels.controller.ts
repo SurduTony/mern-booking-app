@@ -6,6 +6,16 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 
+export const getHotels = async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find().sort("-lastUpdated");
+    res.status(200).json(hotels);
+  } catch (error) {
+    console.log("Error in getHotels: ", error);
+    res.status(500).json({ message: "Error fetching hotels" });
+  }
+};
+
 export const getHotel = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
